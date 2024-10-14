@@ -1,19 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
 
   modules: [
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@vueuse/nuxt',
     '@nuxt/image',
-    'vue-clerk/nuxt',
     '@pinia/nuxt',
-  ],
 
-  clerk: {
-    afterSignOutUrl: '/sign-in'
-  },
+  ],
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -28,6 +25,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       appUrl: process.env.APP_URL,
+      appwrite: {
+        APPWRITE_ENDPOINT: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
+        APPWRITE_PROJECT_ID: process.env.NUXT_PUBLIC_APPWRITE_PROJECT
+      }
     }
   },
 })
