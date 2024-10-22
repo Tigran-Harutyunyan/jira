@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const MEMBERS_ID = runtimeConfig.public.appwrite.APPWRITE_MEMBERS_ID;
 
     try {
-        const { account, databases } = await createSessionClient();
+        const { account, databases } = await createSessionClient(event);
 
         const user = await account.get();
 

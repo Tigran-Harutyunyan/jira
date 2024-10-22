@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { z } from "zod";
 import { useForm } from "vee-validate";
-
+import { useToast } from "@/components/ui/toast/use-toast";
 import { FcGoogle } from "vue3-icons/fc";
 import { FaGithub } from "vue3-icons/fa";
 import DottedSeparator from "@/components/DottedSeparator.vue";
@@ -18,9 +17,10 @@ import {
 
 import { loginSchema } from "../schemas";
 
-import { useUserSession } from "@/features/auth/composables/useUserSession";
+const queryClient = useQueryClient();
+const router = useRouter();
+const { toast } = useToast();
 
-const { login, isPending } = useUserSession();
 // import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 const form = useForm({
@@ -31,12 +31,37 @@ const form = useForm({
   validationSchema: loginSchema,
 });
 
+const { mutate: login, isPending } = useMutation({
+  mutationFn: (payload) =>
+    $fetch(`/api/auth/login`, {
+      method: "POST",
+      body: payload,
+    }),
+  onSuccess: (data) => {
+    if (data?.success) {
+      queryClient.invalidateQueries({ queryKey: ["current"] });
+      toast({
+        title: "Logged in",
+      });
+      router.push("/");
+    }
+  },
+  onError: (error) => {
+    toast({
+      title: error?.message,
+    });
+  },
+});
+
 const onSubmit = form.handleSubmit(async (values) => {
   if (!(values.email && values.password)) return;
 
-  try {
-    await login(values.email, values.password);
-  } catch (error) {}
+  const payload = {
+    email: values.email,
+    password: values.password,
+  };
+
+  login(payload);
 });
 </script>
 

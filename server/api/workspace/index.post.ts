@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     const image = formData.get('image');
 
     try {
-        const { account, databases, storage } = await createSessionClient();
+        const { account, databases, storage } = await createSessionClient(event);
 
         const user = await account.get();
 
