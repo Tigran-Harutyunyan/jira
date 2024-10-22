@@ -10,9 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DottedSeparator from "@/components/DottedSeparator.vue";
-import { useUserSession } from "@/features/auth/composables/useUserSession";
 
-const { logout, isPending } = useUserSession();
+const queryClient = useQueryClient();
 
 const { account } = await createSessionClient();
 
@@ -23,6 +22,15 @@ const { email, name } = user;
 const avatarFallback = name
   ? name.charAt(0).toUpperCase()
   : email.charAt(0).toUpperCase() ?? "U";
+
+const { mutate, isPending } = useMutation({
+  mutationFn: () => $fetch("/api/auth/logout", { method: "POST" }),
+  onSuccess: (data) => {
+    queryClient.invalidateQueries({ queryKey: ["workspaces"] });
+    queryClient.invalidateQueries({ queryKey: ["current"] });
+    navigateTo("/sign-in");
+  },
+});
 </script>
 
 <template>
@@ -68,7 +76,7 @@ const avatarFallback = name
       </div>
       <DottedSeparator class="mb-1" />
       <DropdownMenuItem
-        @click="logout()"
+        @click="mutate()"
         class="h-10 flex items-center justify-center text-amber-700 font-medium cursor-pointer"
       >
         <LogOut class="size-4 mr-2" />
