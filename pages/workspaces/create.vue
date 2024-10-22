@@ -4,9 +4,9 @@ import CreateWorkspaceForm from "@/features/workspaces/components/CreateWorkspac
 </script>
 
 <template>
-  <NuxtLayout name="dashboard">
+  <NuxtLayout name="standalone">
     <div class="w-full lg:max-w-xl">
-      <CreateWorkspaceForm />
+      <CreateWorkspaceForm :show-cancel="false" />
     </div>
   </NuxtLayout>
 </template>

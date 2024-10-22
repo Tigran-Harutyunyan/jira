@@ -22,6 +22,14 @@ const emit = defineEmits<{
   (e: "onClose"): void;
 }>();
 
+interface CreateFormProps {
+  showCancel?: boolean;
+}
+
+withDefaults(defineProps<CreateFormProps>(), {
+  showCancel: true,
+});
+
 const imageRef = ref<File | null>(null);
 const imageSrc = ref();
 const image = ref<File | null>(null);
@@ -184,6 +192,7 @@ const onRemoveImage = () => {
             variant="secondary"
             @click="emit('onClose')"
             :disabled="isPending"
+            :class="{ invisible: !showCancel }"
           >
             Cancel
           </Button>
