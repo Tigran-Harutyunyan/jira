@@ -27,10 +27,13 @@ const { isLoading, data } = useQuery({
       if ("total" in data && data.total === 0) {
         navigateTo("/workspaces/create");
       } else {
-        navigateTo(`/workspaces/${data?.documents[0].$id}`);
+        const ids = data?.documents.map((item) => item.$id);
+
+        if (!ids.includes(workspaceId)) {
+          navigateTo(`/workspaces/${data?.documents[0].$id}`);
+        }
       }
     }
-    console.log(data);
     return data;
   },
 });

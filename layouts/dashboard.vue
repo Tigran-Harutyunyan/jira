@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import CreateWorkspaceModal from "@/features/workspaces/components/CreateWorkspaceModal.vue";
+import CreateProjectModal from "@/features/projects/components/CreateProjectModal.vue";
 </script>
 
 <template>
   <ClientOnly>
     <CreateWorkspaceModal />
+    <CreateProjectModal />
     <div class="min-h-screen">
       <div class="flex w-full h-full">
         <div

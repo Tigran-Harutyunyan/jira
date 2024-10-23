@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
-
 import { ImageIcon } from "lucide-vue-next";
 import { useForm } from "vee-validate";
 import { Input } from "@/components/ui/input";

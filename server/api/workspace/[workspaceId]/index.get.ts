@@ -2,10 +2,7 @@ import { createSessionClient } from "@/lib/appwrite";
 import { Query } from "node-appwrite";
 import { type Workspace } from '@/features/workspaces/types';
 
-const runtimeConfig = useRuntimeConfig();
-const DATABASE_ID = runtimeConfig.APPWRITE_DATABASE_ID;
-const WORKSPACES_ID = runtimeConfig.public.appwrite.APPWRITE_WORKSPACES_ID;
-const MEMBERS_ID = runtimeConfig.public.appwrite.APPWRITE_MEMBERS_ID;
+const { DATABASE_ID, WORKSPACES_ID, MEMBERS_ID } = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
 

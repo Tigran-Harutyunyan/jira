@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/image',
     '@pinia/nuxt',
-
+    '@hebilicious/vue-query-nuxt'
   ],
   shadcn: {
     /**
@@ -25,10 +25,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       appUrl: process.env.APP_URL,
-      appwrite: {
-        APPWRITE_ENDPOINT: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
-        APPWRITE_PROJECT_ID: process.env.NUXT_PUBLIC_APPWRITE_PROJECT
-      }
-    }
+      APPWRITE_ENDPOINT: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
+      PROJECT_ID: process.env.NUXT_PUBLIC_APPWRITE_PROJECT,
+    },
+    APPWRITE_ENDPOINT: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
+    PROJECT_ID: process.env.NUXT_PUBLIC_APPWRITE_PROJECT,
+    WORKSPACES_ID: process.env.NUXT_PUBLIC_APPWRITE_WORKSPACES_ID,
+    MEMBERS_ID: process.env.NUXT_PUBLIC_APPWRITE_MEMBERS_ID,
+    IMAGES_BUCKET_ID: process.env.NUXT_PUBLIC_APPWRITE_IMAGES_BUCKET_ID,
+    PROJECTS_ID: process.env.NUXT_PUBLIC_APPWRITE_PROJECTS_ID,
+    DATABASE_ID: process.env.NUXT_PUBLIC_APPWRITE_DATABASE_ID,
   },
 })

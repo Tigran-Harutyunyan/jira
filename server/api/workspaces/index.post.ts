@@ -3,11 +3,7 @@ import { ID } from "node-appwrite";
 import { generateInviteCode } from "@/lib/utils";
 import { MemberRole } from "@/features/members/types";
 
-const runtimeConfig = useRuntimeConfig();
-
-const DATABASE_ID = runtimeConfig.APPWRITE_DATABASE_ID;
-const WORKSPACES_ID = runtimeConfig.public.appwrite.APPWRITE_WORKSPACES_ID;
-const IMAGES_BUCKET_ID = runtimeConfig.public.appwrite.APPWRITE_IMAGES_BUCKET_ID;
+const { DATABASE_ID, WORKSPACES_ID, IMAGES_BUCKET_ID, MEMBERS_ID } = useRuntimeConfig();
 
 export default defineEventHandler(async (event) => {
     const { image, name } = await readBody(event);
@@ -59,8 +55,6 @@ export default defineEventHandler(async (event) => {
         );
 
         return { workspace };
-
-
 
     } catch (error) {
         return createError({
