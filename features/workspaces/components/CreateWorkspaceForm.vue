@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
 import { ImageIcon } from "lucide-vue-next";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/form";
 
 import { createWorkspaceSchema } from "@/features/workspaces/schemas";
+configure({
+  validateOnBlur: false,
+});
 
 const emit = defineEmits<{
   (e: "onClose"): void;
@@ -64,14 +67,14 @@ const handleImageChange = (e) => {
   }
 };
 
-const form = useForm({
+const { handleSubmit } = useForm({
   initialValues: {
     name: "",
   },
   validationSchema: createWorkspaceSchema,
 });
 
-const onSubmit = form.handleSubmit(async (values) => {
+const onSubmit = handleSubmit(async (values) => {
   if (!values.name) return;
 
   const formData = new FormData();
@@ -100,7 +103,7 @@ const onRemoveImage = () => {
       <DottedSeparator />
     </div>
     <CardContent class="p-7">
-      <form novalidate @submit.prevent.stop="onSubmit">
+      <form novalidate @submit.prevent="onSubmit">
         <div class="flex flex-col gap-y-4">
           <FormField name="name" v-slot="{ componentField }">
             <FormItem>
