@@ -2,6 +2,7 @@
 import CreateWorkspaceModal from "@/features/workspaces/components/CreateWorkspaceModal.vue";
 import CreateProjectModal from "@/features/projects/components/CreateProjectModal.vue";
 import CreateTaskModal from "@/features/tasks/components/CreateTaskModal.vue";
+import EditTaskModal from "@/features/tasks/components/EditTaskModal.vue";
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import CreateTaskModal from "@/features/tasks/components/CreateTaskModal.vue";
     <CreateWorkspaceModal />
     <CreateProjectModal />
     <CreateTaskModal />
+    <EditTaskModal />
     <div class="min-h-screen">
       <div class="flex w-full h-full">
         <div
