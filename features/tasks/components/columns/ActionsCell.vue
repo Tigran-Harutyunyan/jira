@@ -16,6 +16,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { useEditTaskModal } from "@/features/tasks/store/useEditTaskModal";
+
+const { onOpen } = useEditTaskModal();
 
 interface TaskActionsProps {
   id: string;
@@ -28,7 +32,29 @@ const props = defineProps<TaskActionsProps>();
 const workspaceId = useWorkspaceId();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const router = useRouter();
-const isPending = false;
+const { toast } = useToast();
+const queryClient = useQueryClient();
+
+const { mutate, isPending } = useMutation({
+  mutationFn: () =>
+    $fetch(`/api/workspaces/${workspaceId}/tasks/${props.id}`, {
+      method: "DELETE",
+    }),
+  onSuccess: (data) => {
+    if (data.$id) {
+      toast({
+        title: "Task deleted",
+      });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
+    }
+  },
+  onError: (error) => {
+    toast({
+      title: error,
+    });
+  },
+});
 
 const onDelete = async () => {
   const userInput = await confirm.value?.openModal(
@@ -39,7 +65,7 @@ const onDelete = async () => {
 
   if (!userInput) return;
 
-  // mutate({ param: { taskId: id } });
+  mutate();
 };
 
 const onOpenTask = () => {
@@ -74,10 +100,10 @@ const onOpenProject = () => {
           <ExternalLinkIcon class="size-4 mr-2 stroke-2" />
           Open Project
         </DropdownMenuItem>
-        <!-- <DropdownMenuItem @click="open(id)" class="font-medium p-[10px]">
+        <DropdownMenuItem @click="onOpen(id)" class="font-medium p-[10px]">
           <PencilIcon class="size-4 mr-2 stroke-2" />
           Edit Task
-        </DropdownMenuItem> -->
+        </DropdownMenuItem>
         <DropdownMenuItem
           @click="onDelete"
           :disabled="isPending"
