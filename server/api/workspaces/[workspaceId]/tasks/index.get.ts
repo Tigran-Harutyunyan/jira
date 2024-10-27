@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
         }
 
         if (dueDate) {
-            query.push(Query.equal("dueDate", dueDate));
+            query.push(Query.lessThanEqual("dueDate", dueDate));
         }
 
         if (search) {
