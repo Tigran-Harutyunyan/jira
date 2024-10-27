@@ -89,22 +89,29 @@ const onProjectChange = (value: string) => {
   update();
 };
 
-const onDateChange = (value) => {
-  dueDate.value = value;
+const isEqual = (originalDate: Date, newDate: Date) => {
+  if (!originalDate || !newDate) return false;
+  return (
+    originalDate.getDate() === newDate.getDate() &&
+    originalDate.getMonth() === newDate.getMonth() &&
+    originalDate.getFullYear() === newDate.getFullYear()
+  );
+};
+
+const onDateChange = (newDate: Date) => {
+  dueDate.value = isEqual(dueDate.value, newDate) ? "" : newDate;
   update();
 };
 
 const update = () => {
-  const payload = {
+  let payload = {
     assigneeId: assigneeId.value,
     status: status.value,
     projectId: projectId.value,
-    dueDate: dueDate.value,
   };
 
   if (dueDate.value) {
-    const { year, month, day } = dueDate.value;
-    payload.dueDate = format(new Date(year, month - 1, day), "yyyy-MM-dd");
+    payload.dueDate = format(dueDate.value, "yyyy-MM-dd");
   }
 
   emit("onChange", payload);
