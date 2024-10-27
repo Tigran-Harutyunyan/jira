@@ -9,22 +9,28 @@ const { onOpen } = useCreateProjectModal();
 const workspaceId = useWorkspaceId();
 
 const { data } = useQuery({
-  queryKey: ["projects", useWorkspaceId],
+  queryKey: ["projects", workspaceId],
   queryFn: async () => await $fetch(`/api/workspace/${workspaceId}/projects`),
 });
 
 const projects = computed(() => {
-  if (!data.value?.projects?.documents) return [];
-  const pathname = useRoute().params?.projectId;
-  return data.value?.projects?.documents.map((project) => {
-    const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
-    const isActive = pathname === project.$id;
-    return {
-      ...project,
-      href,
-      isActive,
-    };
-  });
+  if (
+    data.value &&
+    "projects" in data.value &&
+    "documents" in data.value.projects
+  ) {
+    const pathname = useRoute().params?.projectId;
+    return data.value?.projects?.documents.map((project) => {
+      const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
+      const isActive = pathname === project.$id;
+      return {
+        ...project,
+        href,
+        isActive,
+      };
+    });
+  }
+  return [];
 });
 </script>
 
