@@ -43,12 +43,7 @@ const emit = defineEmits<{
   (e: "onCancel"): void;
 }>();
 
-const {
-  setFieldValue,
-  handleSubmit,
-  validate,
-  values: formValues,
-} = useForm({
+const { setFieldValue, handleSubmit, validate, values } = useForm({
   initialValues: {
     workspaceId,
   },
@@ -58,9 +53,7 @@ const {
 const dueDate = ref();
 
 const onDateChange = (date) => {
-  dueDate.value = date;
-  const { year, month, day } = dueDate.value;
-  setFieldValue("dueDate", new Date(year, month - 1, day));
+  setFieldValue("dueDate", date);
 };
 
 const { mutate, isPending } = useMutation({
@@ -84,7 +77,19 @@ const { mutate, isPending } = useMutation({
 
 const onSubmit = handleSubmit(async (values) => {
   if (!validate()) return;
-  mutate(formValues);
+  let payload = {
+    ...values,
+    dueDate: dueDate.value,
+  };
+
+  mutate(payload);
+});
+
+onMounted(() => {
+  const params = useRoute().params;
+  if (params.projectId) {
+    setFieldValue("projectId", params.projectId);
+  }
 });
 </script>
 
@@ -117,7 +122,11 @@ const onSubmit = handleSubmit(async (values) => {
             <FormItem>
               <FormLabel> Due Date </FormLabel>
               <FormControl>
-                <DatePicker :value="dueDate" @onChange="onDateChange" />
+                <DatePicker
+                  v-model="dueDate"
+                  @onChange="onDateChange"
+                  :with-min-date="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -225,7 +234,7 @@ const onSubmit = handleSubmit(async (values) => {
             Cancel
           </Button>
           <Button :disabled="isPending" type="submit" size="lg">
-            Create Task
+            {{ isPending ? "Wait" : "Create Task" }}
           </Button>
         </div>
       </form>
