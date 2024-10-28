@@ -2,7 +2,7 @@
 import { useToast } from "@/components/ui/toast/use-toast";
 
 import { ArrowLeftIcon, CopyIcon, ImageIcon } from "lucide-vue-next";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
@@ -19,6 +19,10 @@ import {
 
 import { type Workspace } from "../types";
 import { updateWorkspaceSchema } from "../schemas";
+
+configure({
+  validateOnBlur: false,
+});
 
 interface EditWorkspaceFormProps {
   initialValues: Workspace;

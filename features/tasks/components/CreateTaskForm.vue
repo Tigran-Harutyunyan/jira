@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/DatePicker.vue";
@@ -26,6 +26,10 @@ import {
 import { TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+
+configure({
+  validateOnBlur: false,
+});
 
 const queryClient = useQueryClient();
 const workspaceId = useWorkspaceId();

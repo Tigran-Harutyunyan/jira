@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
 import { ImageIcon } from "lucide-vue-next";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -16,6 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+configure({
+  validateOnBlur: false,
+});
 
 import { updateProjectSchema } from "@/features/projects/schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
@@ -70,6 +74,9 @@ const { mutate, isPending } = useMutation({
     if (data && "project" in data && "$id" in data.project) {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({
+        queryKey: ["projects", workspaceId],
+      });
+      queryClient.invalidateQueries({
         queryKey: ["project", data.project.$id],
       });
       toast({
@@ -104,9 +111,11 @@ const { mutate: deleteProject, isPending: isDeletingProject } = useMutation({
       method: "DELETE",
     }),
   onSuccess: (data) => {
-    debugger;
     if (data && "$id" in data) {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({
+        queryKey: ["projects", workspaceId],
+      });
       queryClient.invalidateQueries({
         queryKey: ["project", props.initialValues.$id],
       });

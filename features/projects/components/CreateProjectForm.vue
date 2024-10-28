@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
 import { ImageIcon } from "lucide-vue-next";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/form";
 
 import { createProjectSchema } from "@/features/projects/schemas";
+configure({
+  validateOnBlur: false,
+});
 
 const emit = defineEmits<{
   (e: "onClose"): void;
@@ -61,6 +64,9 @@ const { mutate, isPending } = useMutation({
   onSuccess: (data) => {
     if (data && "$id" in data && "workspaceId" in data) {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({
+        queryKey: ["projects", workspaceId],
+      });
       router.push(`/workspaces/${data.workspaceId}`);
       emit("onClose");
       toast({

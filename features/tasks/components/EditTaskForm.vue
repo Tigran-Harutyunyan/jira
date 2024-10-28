@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
-import { useForm } from "vee-validate";
+import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/DatePicker.vue";
@@ -43,6 +43,10 @@ const props = defineProps<EditTaskFormProps>();
 const emit = defineEmits<{
   (e: "onCancel"): void;
 }>();
+
+configure({
+  validateOnBlur: false,
+});
 
 const {
   setFieldValue,
