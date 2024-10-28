@@ -20,7 +20,7 @@ const { isLoading, data } = useQuery<Task>({
 </script>
 
 <template>
-  <NuxtLayout name="standalone">
+  <NuxtLayout name="dashboard">
     <PageLoader v-if="isLoading" />
     <template v-else>
       <div v-if="data" class="flex flex-col">
