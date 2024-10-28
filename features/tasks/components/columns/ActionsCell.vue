@@ -84,7 +84,7 @@ const onOpenProject = () => {
       <DropdownMenuTrigger as-child>
         <MoreHorizontal
           v-if="isKanbanCard"
-          class="size-[18px] stroke-1 shrink-0 text-neutral-700 hover:opacity-75 transition"
+          class="size-[18px] stroke-1 shrink-0 text-neutral-700 hover:opacity-75 transition cursor-pointer"
         />
 
         <Button v-else variant="ghost" class="size-8 p-0">
