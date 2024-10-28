@@ -14,8 +14,10 @@ import TaskDateCell from "@/features/tasks/components/columns/TaskDateCell.vue";
 import StatusCell from "@/features/tasks/components/columns/StatusCell.vue";
 import ActionsCell from "@/features/tasks/components/columns/ActionsCell.vue";
 import DataFilters from "@/features/tasks/components/DataFilters.vue";
-import type { Task, TaskFilters } from "../types";
+import DataKanban from "@/features/tasks/components/DataKanban.vue";
+import type { Task, TaskFilters, TaskStatus } from "../types";
 import { type ColumnDef } from "@tanstack/vue-table";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
@@ -25,8 +27,10 @@ defineProps<TaskViewSwitcherProps>();
 const { onOpen } = useCreateTaskModal();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
-const view = ref("table");
+const view = ref("kanban");
 const filters = ref<TaskFilters>();
+const queryClient = useQueryClient();
+const { toast } = useToast();
 
 const updateFilters = (data: TaskFilters) => {
   filters.value = data;
@@ -121,6 +125,35 @@ watch(
   () => filters.value,
   () => refetch()
 );
+
+const { mutate: bulkUpdate } = useMutation({
+  mutationFn: (
+    tasks: { $id: string; status: TaskStatus; position: number }[]
+  ) =>
+    $fetch("/api/bulk-update", {
+      method: "POST",
+      body: {
+        tasks: JSON.stringify(tasks),
+        workspaceId,
+      },
+    }),
+  onSuccess: (data) => {
+    // queryClient.invalidateQueries({
+    //   queryKey: ["tasks", filters.value?.projectId || projectId],
+    // });
+  },
+  onError: (error) => {
+    toast({
+      title: error,
+    });
+  },
+});
+
+const onKanbanChange = (
+  tasks: { $id: string; status: TaskStatus; position: number }[]
+) => {
+  bulkUpdate(tasks);
+};
 </script>
 
 <template>
@@ -163,15 +196,10 @@ watch(
         <TabsContent value="table" class="mt-0">
           <DataTable :columns="columns" :data="data ?? []" />
         </TabsContent>
-        <!--  <TabsContent value="kanban" class="mt-0">
-          <DataKanban
-            onChange="{onKanbanChange}"
-            data="{tasks?.documents"
-            ??
-            []}
-          />
+        <TabsContent value="kanban" class="mt-0">
+          <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
         </TabsContent>
-        <TabsContent value="calendar" class="mt-0 h-full pb-4">
+        <!--<TabsContent value="calendar" class="mt-0 h-full pb-4">
           <DataCalendar data="{tasks?.documents" ?? []} />
         </TabsContent>-->
       </template>
