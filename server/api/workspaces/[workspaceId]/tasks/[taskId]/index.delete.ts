@@ -1,4 +1,4 @@
-import { createSessionClient, createAdminClient } from "@/lib/appwrite";
+import { createSessionClient } from "@/lib/appwrite";
 import { Query } from "node-appwrite";
 import { type Task } from "@/features/tasks/types";
 
