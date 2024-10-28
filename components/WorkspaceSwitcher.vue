@@ -14,8 +14,6 @@ import { useCreateWorkspaceModal } from "@/features/workspaces/store/useCreateWo
 
 const workspaceId = useWorkspaceId();
 
-const router = useRouter();
-
 const { onOpen } = useCreateWorkspaceModal();
 
 const { isLoading, data } = useQuery({
@@ -41,7 +39,7 @@ const { isLoading, data } = useQuery({
 const workspaces = computed(() => data.value);
 
 const onSelect = (id: string) => {
-  router.push(`/workspaces/${id}`);
+  navigateTo(`/workspaces/${id}`);
 };
 </script>
 

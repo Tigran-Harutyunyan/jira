@@ -16,7 +16,11 @@ const defaultMap = {
   description: "Monitor all of your projects and tasks here",
 };
 
-const { title, description } = defaultMap;
+const pathname = useRoute().fullPath;
+const pathnameParts = pathname.split("/");
+const pathnameKey = pathnameParts[3] as keyof typeof pathnameMap;
+
+const { title, description } = pathnameMap[pathnameKey] || defaultMap;
 </script>
 
 <template>
