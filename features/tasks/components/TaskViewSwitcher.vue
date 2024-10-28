@@ -15,6 +15,7 @@ import StatusCell from "@/features/tasks/components/columns/StatusCell.vue";
 import ActionsCell from "@/features/tasks/components/columns/ActionsCell.vue";
 import DataFilters from "@/features/tasks/components/DataFilters.vue";
 import DataKanban from "@/features/tasks/components/DataKanban.vue";
+import DataCalendar from "@/features/tasks/components/DataCalendar.vue";
 import type { Task, TaskFilters, TaskStatus } from "../types";
 import { type ColumnDef } from "@tanstack/vue-table";
 import { useToast } from "@/components/ui/toast/use-toast";
@@ -22,14 +23,20 @@ import { useToast } from "@/components/ui/toast/use-toast";
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
 }
+
 defineProps<TaskViewSwitcherProps>();
+
+const VIEWS = {
+  CALENDAR: "calendar",
+  KANBAN: "kanban",
+  TABLE: "table",
+} as const;
 
 const { onOpen } = useCreateTaskModal();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
-const view = ref("kanban");
+const view = ref(VIEWS.TABLE);
 const filters = ref<TaskFilters>();
-const queryClient = useQueryClient();
 const { toast } = useToast();
 
 const updateFilters = (data: TaskFilters) => {
@@ -193,15 +200,15 @@ const onKanbanChange = (
       </div>
 
       <template v-else>
-        <TabsContent value="table" class="mt-0">
+        <TabsContent :value="VIEWS.TABLE" class="mt-0">
           <DataTable :columns="columns" :data="data ?? []" />
         </TabsContent>
-        <TabsContent value="kanban" class="mt-0">
+        <TabsContent :value="VIEWS.KANBAN" class="mt-0">
           <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
         </TabsContent>
-        <!--<TabsContent value="calendar" class="mt-0 h-full pb-4">
-          <DataCalendar data="{tasks?.documents" ?? []} />
-        </TabsContent>-->
+        <TabsContent :value="VIEWS.CALENDAR" class="mt-0 h-full pb-4">
+          <DataCalendar :data="data ?? []" />
+        </TabsContent>
       </template>
     </div>
   </Tabs>
