@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import { PencilIcon } from "lucide-vue-next";
 import PageLoader from "@/components/PageLoader.vue";
 import PageError from "@/components/PageError.vue";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar.vue";
-import { PencilIcon } from "lucide-vue-next";
+import TaskViewSwitcher from "@/features/tasks/components/TaskViewSwitcher.vue";
+
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import { useProjectId } from "@/features/projects/composables/useProjectId";
 import { type Project } from "@/features/projects/types";
+import Analytics from "@/components/Analytics.vue";
 
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 
-const analytics = null;
+const { data: analytics } = useQuery({
+  queryKey: ["project-analytics", projectId],
+  queryFn: async () =>
+    $fetch(`/api/workspace/${workspaceId}/projects/${projectId}/analytics`),
+});
 
 const { isLoading, data: initialValues } = useQuery<Project>({
   queryKey: ["project", projectId],
@@ -46,7 +53,7 @@ const project = computed(() => {
           <p class="text-lg font-semibold">{{ project?.name }}</p>
         </div>
         <div>
-          <Button variant="secondary" size="sm" asChild>
+          <Button variant="secondary" size="sm" as-child>
             <NuxtLink
               :to="`/workspaces/${project?.workspaceId}/projects/${project?.$id}/settings`"
             >
@@ -57,8 +64,8 @@ const project = computed(() => {
         </div>
       </div>
 
-      <!-- <Analytics v-if="analytics" :data="analytics" />
-      <TaskViewSwitcher hideProjectFilter /> -->
+      <Analytics v-if="analytics" :data="analytics" />
+      <TaskViewSwitcher :hideProjectFilter="true" />
     </div>
   </NuxtLayout>
 </template>
