@@ -147,7 +147,7 @@ const onRemoveImage = () => {
   <ConfirmDialog ref="confirm" />
   <Card class="w-full h-full border-none shadow-none">
     <CardHeader class="flex p-7">
-      <CardTitle class="text-xl font-bold"> Create a new project </CardTitle>
+      <CardTitle class="text-xl font-bold"> Edit project </CardTitle>
     </CardHeader>
     <div class="px-7">
       <DottedSeparator />
