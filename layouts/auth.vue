@@ -11,7 +11,7 @@ const isSignIn = computed(() => useRoute().path === "/sign-in");
         <NuxtImg src="/logo.svg" alt="logo" width="152" height="56" />
         <Button as-child variant="secondary">
           <NuxtLink :to="isSignIn ? '/sign-up' : '/sign-in'">
-            {{ isSignIn ? "Sign Up" : "Login" }}
+            {{ isSignIn ? "Sign Up" : "Sign In" }}
           </NuxtLink>
         </Button>
       </nav>
