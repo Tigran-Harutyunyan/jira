@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/image',
     '@pinia/nuxt',
-    '@hebilicious/vue-query-nuxt'
+    '@hebilicious/vue-query-nuxt',
+    '@samk-dev/nuxt-vcalendar',
   ],
   shadcn: {
     /**
