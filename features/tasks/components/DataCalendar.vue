@@ -57,7 +57,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <FullCalendar v-if="events" ref="fullCalendar" :options="calendarOptions">
+  <FullCalendar ref="fullCalendar" :options="calendarOptions">
     <template v-slot:eventContent="arg">
       <CalendarEventCard
         :id="arg.event.id"

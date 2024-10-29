@@ -207,7 +207,7 @@ const onKanbanChange = (
           <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
         </TabsContent>
         <TabsContent :value="VIEWS.CALENDAR" class="mt-0 h-full pb-4">
-          <DataCalendar :data="data ?? []" />
+          <!-- <DataCalendar :data="data ?? []" /> -->
         </TabsContent>
       </template>
     </div>
