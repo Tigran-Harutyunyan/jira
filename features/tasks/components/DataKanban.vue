@@ -136,18 +136,17 @@ const onCardDrop = (
 </script>
 
 <template>
-  <Container v-if="tasks" group-name="cols" tag="div" orientation="horizontal">
+  <Container group-name="cols" tag="div" orientation="horizontal">
     <div class="flex overflow-x-auto">
       <Draggable
         v-for="board in boards"
         :key="board"
         class="flex-1 mx-2 bg-muted p-1.5 rounded-md min-w-[200px]"
-        :class="{ 'board-with-no-items': !tasks[board].length }"
       >
         <KanbanColumnHeader
           v-if="tasks && tasks[board]"
           :board="board"
-          :task-count="tasks[board].length"
+          :task-count="tasks[board]?.length"
         />
         <Container
           group-name="col-items"
