@@ -50,9 +50,9 @@ const calendarOptions = computed(() => {
 
 const fullCalendar = ref(null);
 //Method for interacting with component
-let calendarApi = ref();
+// let calendarApi = ref();
+// calendarApi.value = fullCalendar.value?.getApi();
 onMounted(() => {
-  calendarApi.value = fullCalendar.value?.getApi();
   window.dispatchEvent(new Event("resize"));
 });
 </script>

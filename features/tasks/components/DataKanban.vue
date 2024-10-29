@@ -50,7 +50,6 @@ watch(
     });
 
     tasks.value = newTasks;
-    // isloading.value = false;
   },
   {
     immediate: true,
@@ -128,7 +127,6 @@ const onCardDrop = (
 
   console.log(updatesPayload);
   if (updatesPayload.length) {
-    // isloading.value = true;
     emit("onChange", updatesPayload);
   }
 

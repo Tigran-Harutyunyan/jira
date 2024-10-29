@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useToast } from "@/components/ui/toast/use-toast";
-import { useForm } from "vee-validate";
-import { FcGoogle } from "vue3-icons/fc";
-import { FaGithub } from "vue3-icons/fa";
-import DottedSeparator from "@/components/DottedSeparator.vue";
+import { useForm, configure } from "vee-validate";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,7 +17,9 @@ const queryClient = useQueryClient();
 const router = useRouter();
 const { toast } = useToast();
 
-// import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
+configure({
+  validateOnBlur: false,
+});
 
 const form = useForm({
   initialValues: {
@@ -129,28 +128,7 @@ const onSubmit = form.handleSubmit(async (values) => {
     <div class="px-7">
       <DottedSeparator />
     </div>
-    <CardContent class="p-7 flex flex-col gap-y-4">
-      <!-- <Button
-        @click="signUpWithGoogle()"
-        :disabled="isPending"
-        variant="secondary"
-        size="lg"
-        class="w-full"
-      >
-        <FcGoogle class="mr-2 size-5" />
-        Login with Google
-      </Button>
-      <Button
-        @click="signUpWithGithub()"
-        :disabled="isPending"
-        variant="secondary"
-        size="lg"
-        class="w-full"
-      >
-        <FaGithub class="mr-2 size-5" />
-        Login with Github
-      </Button> -->
-    </CardContent>
+
     <div class="px-7">
       <DottedSeparator />
     </div>
