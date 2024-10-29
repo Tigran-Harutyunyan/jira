@@ -34,7 +34,7 @@ watch(
   () => props.data,
   (newVal) => {
     if (!newVal || !Array.isArray(newVal)) return;
-
+    console.log(newVal);
     const newTasks: TasksState = {
       [TaskStatus.BACKLOG]: [],
       [TaskStatus.TODO]: [],
@@ -136,8 +136,8 @@ const onCardDrop = (
 </script>
 
 <template>
-  <Container group-name="cols" tag="div" orientation="horizontal">
-    <div class="flex overflow-x-auto" v-if="tasks">
+  <Container v-if="tasks" group-name="cols" tag="div" orientation="horizontal">
+    <div class="flex overflow-x-auto">
       <Draggable
         v-for="board in boards"
         :key="board"

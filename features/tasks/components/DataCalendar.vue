@@ -12,6 +12,7 @@ interface DataCalendarProps {
 const props = defineProps<DataCalendarProps>();
 
 const events = computed(() => {
+  if (!props.data || !Array.isArray(props.data)) return [];
   return props.data.map((task: Task) => ({
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
@@ -56,7 +57,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <FullCalendar ref="fullCalendar" :options="calendarOptions">
+  <FullCalendar v-if="events" ref="fullCalendar" :options="calendarOptions">
     <template v-slot:eventContent="arg">
       <CalendarEventCard
         :id="arg.event.id"
