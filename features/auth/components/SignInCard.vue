@@ -98,7 +98,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           </FormItem>
         </FormField>
         <Button :disabled="isPending" size="lg" class="w-full">
-          Sign in
+          {{ isPending ? "Wait..." : "Sign in" }}
         </Button>
       </form>
     </CardContent>
