@@ -164,7 +164,13 @@ const onKanbanChange = (
 </script>
 
 <template>
-  <Tabs :defaultValue="view" class="flex-1 w-full border rounded-lg">
+  <div
+    v-if="isLoadingTasks"
+    class="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center"
+  >
+    <Loader class="size-5 animate-spin text-muted-foreground" />
+  </div>
+  <Tabs v-else :defaultValue="view" class="flex-1 w-full border rounded-lg">
     <div class="h-full flex flex-col overflow-auto p-4">
       <div
         class="flex flex-col gap-y-2 lg:flex-row justify-between items-center"
@@ -192,24 +198,15 @@ const onKanbanChange = (
       />
       <DottedSeparator class="my-4" />
 
-      <div
-        v-if="isLoadingTasks"
-        class="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center"
-      >
-        <Loader class="size-5 animate-spin text-muted-foreground" />
-      </div>
-
-      <template v-else>
-        <TabsContent :value="VIEWS.TABLE" class="mt-0">
-          <DataTable :columns="columns" :data="data ?? []" />
-        </TabsContent>
-        <TabsContent :value="VIEWS.KANBAN" class="mt-0">
-          <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
-        </TabsContent>
-        <TabsContent :value="VIEWS.CALENDAR" class="mt-0 h-full pb-4">
-          <!-- <DataCalendar :data="data ?? []" /> -->
-        </TabsContent>
-      </template>
+      <TabsContent :value="VIEWS.TABLE" class="mt-0">
+        <DataTable :columns="columns" :data="data ?? []" />
+      </TabsContent>
+      <TabsContent :value="VIEWS.KANBAN" class="mt-0">
+        <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
+      </TabsContent>
+      <TabsContent :value="VIEWS.CALENDAR" class="mt-0 h-full pb-4">
+        <!-- <DataCalendar :data="data ?? []" /> -->
+      </TabsContent>
     </div>
   </Tabs>
 </template>
