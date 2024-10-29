@@ -1,5 +1,4 @@
 <script setup lang="ts">
-declare var multiMonthYear: any;
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import multiMonthPlugin from "@fullcalendar/multimonth";
@@ -34,7 +33,6 @@ const calendarOptions = computed(() => {
     },
     initialView: "dayGridMonth",
     multiMonthMaxColumns: 1,
-    // initialEvents: events.value,
     eventSources: [
       {
         events: events.value,
