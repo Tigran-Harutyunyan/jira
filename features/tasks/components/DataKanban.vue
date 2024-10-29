@@ -125,7 +125,6 @@ const onCardDrop = (
 
   newTasks[sourceStatus] = sourceColumn;
 
-  console.log(updatesPayload);
   if (updatesPayload.length) {
     emit("onChange", updatesPayload);
   }

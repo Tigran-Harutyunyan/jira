@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<EditFormProps>(), {
 
 const imageRef = ref<File | null>(null);
 const imageSrc = ref(props.initialValues.imageUrl);
-const image = ref<File | null>(null);
+const image = ref<File | null>(props.initialValues.imageUrl);
 const queryClient = useQueryClient();
 const router = useRouter();
 const { toast } = useToast();

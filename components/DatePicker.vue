@@ -47,7 +47,7 @@ const emit = defineEmits<{
     </PopoverTrigger>
     <PopoverContent class="w-auto p-0">
       <VDatePicker
-        :minDate="withMinDate ? new Date() : null"
+        :minDate="new Date()"
         v-model="value"
         @dayclick="(data) => emit('onChange', data.date)"
       />

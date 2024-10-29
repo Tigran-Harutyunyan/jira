@@ -31,7 +31,7 @@ interface EditWorkspaceFormProps {
 const props = defineProps<EditWorkspaceFormProps>();
 
 const emit = defineEmits<{
-  (e: "onCancel"): void;
+  (e: "onClose"): void;
 }>();
 
 const imageRef = ref<File | null>(null);
@@ -309,7 +309,7 @@ const handleCopyInviteLink = () => {
               type="button"
               size="lg"
               variant="secondary"
-              @click="emit('onCancel')"
+              @click="emit('onClose')"
               :disabled="isPending"
               class="invisible"
             >

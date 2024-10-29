@@ -41,7 +41,7 @@ interface EditTaskFormProps {
 const props = defineProps<EditTaskFormProps>();
 
 const emit = defineEmits<{
-  (e: "onCancel"): void;
+  (e: "onClose"): void;
 }>();
 
 configure({
@@ -77,7 +77,7 @@ const { mutate, isPending } = useMutation({
     if (data && "$id" in data) {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
-      emit("onCancel");
+      emit("onClose");
       toast({
         title: "Task updated",
       });
@@ -237,7 +237,7 @@ const onDateChange = (date) => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onCancel')"
+            @click="emit('onClose')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >

@@ -97,7 +97,9 @@ const onSubmit = form.handleSubmit(async (values) => {
             <FormMessage />
           </FormItem>
         </FormField>
-        <Button :disabled="isPending" size="lg" class="w-full"> Login </Button>
+        <Button :disabled="isPending" size="lg" class="w-full">
+          Sign in
+        </Button>
       </form>
     </CardContent>
     <div class="px-7">

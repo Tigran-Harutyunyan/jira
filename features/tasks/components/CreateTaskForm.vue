@@ -44,7 +44,7 @@ interface CreateTaskFormProps {
 defineProps<CreateTaskFormProps>();
 
 const emit = defineEmits<{
-  (e: "onCancel"): void;
+  (e: "onClose"): void;
 }>();
 
 const { setFieldValue, handleSubmit, validate, values } = useForm({
@@ -66,7 +66,7 @@ const { mutate, isPending } = useMutation({
   onSuccess: (data) => {
     if (data && "$id" in data) {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      emit("onCancel");
+      emit("onClose");
       toast({
         title: "Task created",
       });
@@ -231,7 +231,7 @@ onMounted(() => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onCancel')"
+            @click="emit('onClose')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >
