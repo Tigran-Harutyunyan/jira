@@ -32,7 +32,9 @@ let tasks = ref();
 
 watch(
   () => props.data,
-  () => {
+  (newVal) => {
+    if (!newVal || !Array.isArray(newVal)) return;
+
     const newTasks: TasksState = {
       [TaskStatus.BACKLOG]: [],
       [TaskStatus.TODO]: [],
@@ -41,7 +43,7 @@ watch(
       [TaskStatus.DONE]: [],
     };
 
-    props.data.forEach((task) => {
+    newVal.forEach((task) => {
       newTasks[task.status].push(task);
     });
 
@@ -135,7 +137,7 @@ const onCardDrop = (
 
 <template>
   <Container group-name="cols" tag="div" orientation="horizontal">
-    <div class="flex overflow-x-auto">
+    <div class="flex overflow-x-auto" v-if="tasks">
       <Draggable
         v-for="board in boards"
         :key="board"
