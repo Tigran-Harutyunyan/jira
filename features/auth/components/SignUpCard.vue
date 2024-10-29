@@ -13,6 +13,8 @@ import {
 
 import { registerSchema } from "../schemas";
 
+const showTerms = false;
+
 const queryClient = useQueryClient();
 const router = useRouter();
 const { toast } = useToast();
@@ -68,7 +70,7 @@ const onSubmit = form.handleSubmit(async (values) => {
   <Card class="w-full h-full md:w-[487px] border-none shadow-none">
     <CardHeader class="flex items-center justify-center text-center p-7">
       <CardTitle class="text-2xl"> Sign Up</CardTitle>
-      <CardDescription>
+      <CardDescription v-if="showTerms">
         By signing up, you agree to our
         <NuxtLink to="/privacy">
           <span class="text-blue-700">Privacy Policy</span>
