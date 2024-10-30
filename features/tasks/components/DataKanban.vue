@@ -23,6 +23,7 @@ interface DataKanbanProps {
 type TasksToUpdate = { $id: string; status: TaskStatus; position: number }[];
 
 const props = defineProps<DataKanbanProps>();
+const { data: RawTasks } = toRefs(props);
 
 const emit = defineEmits<{
   (e: "onChange", tasks: TasksToUpdate): void;
@@ -31,10 +32,10 @@ const emit = defineEmits<{
 let tasks = ref();
 
 watch(
-  () => props.data,
+  () => RawTasks.value,
   (newVal) => {
     if (!newVal || !Array.isArray(newVal)) return;
-    console.log(newVal);
+    console.log("new tasks", newVal);
     const newTasks: TasksState = {
       [TaskStatus.BACKLOG]: [],
       [TaskStatus.TODO]: [],
@@ -43,7 +44,7 @@ watch(
       [TaskStatus.DONE]: [],
     };
 
-    newVal.forEach((task) => {
+    newVal.forEach((task: Task) => {
       newTasks[task.status].push(task);
     });
 
@@ -60,7 +61,7 @@ watch(
 
 const isloading = ref(false);
 
-const getCardPayload = (board: string) => {
+const getCardPayload = (board: TaskStatus) => {
   return (index: number) => {
     return markRaw(
       tasks.value[board].filter((p: Task) => p.status === board)[index]
@@ -79,6 +80,7 @@ const onCardDrop = (
   const { addedIndex, removedIndex, payload } = dragResult;
 
   if (addedIndex === null && removedIndex === null) return;
+  if (tasks.value[sourceStatus]) return;
 
   const newTasks = { ...tasks.value };
 
@@ -88,7 +90,6 @@ const onCardDrop = (
     position: number;
   }[] = [];
 
-  // Safely remove the task from the source column
   const sourceColumn = [...tasks.value[sourceStatus]];
 
   let updatedMovedTask = payload;
@@ -136,7 +137,7 @@ const onCardDrop = (
 </script>
 
 <template>
-  <Container group-name="cols" tag="div" orientation="horizontal">
+  <Container v-if="tasks" group-name="cols" tag="div" orientation="horizontal">
     <div class="flex overflow-x-auto">
       <Draggable
         v-for="board in boards"
