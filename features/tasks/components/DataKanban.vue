@@ -80,7 +80,8 @@ const onCardDrop = (
   const { addedIndex, removedIndex, payload } = dragResult;
 
   if (addedIndex === null && removedIndex === null) return;
-  if (tasks.value[sourceStatus]) return;
+
+  if (!tasks.value[sourceStatus]) return;
 
   const newTasks = { ...tasks.value };
 
@@ -102,7 +103,6 @@ const onCardDrop = (
     if (updatedMovedTask) {
       updatedMovedTask.status = sourceStatus;
 
-      // Always update the moved task
       updatesPayload.push({
         $id: updatedMovedTask.$id,
         status: sourceStatus,
@@ -126,7 +126,12 @@ const onCardDrop = (
     }
   });
 
-  newTasks[sourceStatus] = sourceColumn;
+  newTasks[sourceStatus] = sourceColumn.map((task: Task) => {
+    return {
+      ...task,
+      status: sourceStatus,
+    };
+  });
 
   if (updatesPayload.length) {
     emit("onChange", updatesPayload);
