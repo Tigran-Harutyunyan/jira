@@ -1,6 +1,8 @@
 # Workspace, project, task, member management with Nuxt.js, Vue, Tailwind, Shadcn, Appwrite
 
-[Live Demo](https://saas-generator-nuxt.vercel.app/)
+[Live Demo](https://clickup-liart.vercel.app/)
+
+[Video Demo](https://shorturl.at/e0n95)
 
 Features:
 
