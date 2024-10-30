@@ -36,7 +36,7 @@ defineExpose({ openModal });
     </DialogContent>
   </Dialog>
 
-  <Drawer v-else :open="open" @update:open="emit('onOpenChange')">
+  <Drawer v-else :open="open">
     <DrawerContent>
       <div class="overflow-y-auto hide-scrollbar max-h-[85vh]">
         <slot />
