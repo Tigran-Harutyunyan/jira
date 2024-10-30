@@ -10,26 +10,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DottedSeparator from "@/components/DottedSeparator.vue";
+import { useUIstore } from "@/stores/useUI";
+
+const { userInfo } = storeToRefs(useUIstore());
+const { setUserInfo } = useUIstore();
 
 const queryClient = useQueryClient();
 
-const { account } = await createSessionClient();
-
-const user = await account.get();
-
-const { email, name } = user;
-
-const avatarFallback = name
-  ? name.charAt(0).toUpperCase()
-  : email.charAt(0).toUpperCase() ?? "U";
+const avatarFallback = computed(() => {
+  if (!userInfo.value) return "U";
+  const { name, email } = userInfo.value;
+  return name
+    ? name.charAt(0).toUpperCase()
+    : email.charAt(0).toUpperCase() ?? "U";
+});
 
 const { mutate, isPending } = useMutation({
   mutationFn: () => $fetch("/api/auth/logout", { method: "POST" }),
   onSuccess: (data) => {
     queryClient.invalidateQueries({ queryKey: ["workspaces"] });
     queryClient.invalidateQueries({ queryKey: ["current"] });
+    setUserInfo(null);
     navigateTo("/sign-in");
   },
+});
+onBeforeMount(async () => {
+  if (!userInfo.value) {
+    const { account } = await createSessionClient();
+    const user = await account.get();
+    setUserInfo(user);
+  }
 });
 </script>
 
@@ -41,7 +51,7 @@ const { mutate, isPending } = useMutation({
     <Loader class="size-4 animate-spin text-muted-foreground" />
   </div>
 
-  <DropdownMenu :modal="false" v-if="user && !isPending">
+  <DropdownMenu :modal="false" v-if="userInfo && !isPending">
     <DropdownMenuTrigger class="outline-none relative">
       <Avatar
         class="size-10 hover:opacity-75 transition border border-neutral-300"
@@ -69,9 +79,9 @@ const { mutate, isPending } = useMutation({
         </Avatar>
         <div class="flex flex-col items-center justify-center">
           <p class="text-sm font-medium text-neutral-900">
-            {{ name || "User" }}
+            {{ userInfo.name || "User" }}
           </p>
-          <p class="text-xs text-neutral-500">{{ email }}</p>
+          <p class="text-xs text-neutral-500">{{ userInfo.email }}</p>
         </div>
       </div>
       <DottedSeparator class="mb-1" />
