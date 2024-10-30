@@ -16,9 +16,16 @@ import ActionsCell from "@/features/tasks/components/columns/ActionsCell.vue";
 import DataFilters from "@/features/tasks/components/DataFilters.vue";
 import DataKanban from "@/features/tasks/components/DataKanban.vue";
 import DataCalendar from "@/features/tasks/components/DataCalendar.vue";
-import type { Task, TaskFilters, TaskStatus } from "../types";
+import {
+  type Task,
+  type TaskFilters,
+  type TaskStatus,
+  type TaskTabValue,
+  TASK_VIEW_TABS,
+} from "../types";
 import { type ColumnDef } from "@tanstack/vue-table";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { useUIstore } from "@/stores/useUI";
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
@@ -26,19 +33,16 @@ interface TaskViewSwitcherProps {
 
 defineProps<TaskViewSwitcherProps>();
 
-const VIEWS = {
-  CALENDAR: "calendar",
-  KANBAN: "kanban",
-  TABLE: "table",
-} as const;
-
 const { onOpen } = useCreateTaskModal();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
-const view = ref(VIEWS.TABLE);
 const filters = ref<TaskFilters>();
 const { toast } = useToast();
-const queryClient = useQueryClient();
+
+const { taskViewTab } = storeToRefs(useUIstore());
+const { setTaskViewTab } = useUIstore();
+
+const view = ref(taskViewTab.value);
 
 const updateFilters = (data: TaskFilters) => {
   filters.value = data;
@@ -49,7 +53,10 @@ const {
   isLoading: isLoadingTasks,
   refetch,
 } = useQuery({
-  queryKey: ["tasks", JSON.stringify(filters.value)],
+  queryKey: [
+    "tasks",
+    JSON.stringify(filters.value) + filters.value?.projectId || projectId,
+  ],
   queryFn: async () => {
     const queries = { ...filters.value };
     queries.projectId = queries.projectId || projectId;
@@ -158,6 +165,10 @@ const onKanbanChange = (
 ) => {
   bulkUpdate(tasks);
 };
+
+const onTabChange = (tab: TaskTabValue) => {
+  setTaskViewTab(tab);
+};
 </script>
 
 <template>
@@ -167,7 +178,12 @@ const onKanbanChange = (
   >
     <Loader class="size-5 animate-spin text-muted-foreground" />
   </div>
-  <Tabs v-else :defaultValue="view" class="flex-1 w-full border rounded-lg">
+  <Tabs
+    v-else
+    :defaultValue="view"
+    @update:modelValue="onTabChange"
+    class="flex-1 w-full border rounded-lg"
+  >
     <div class="h-full flex flex-col overflow-auto p-4">
       <div
         class="flex flex-col gap-y-2 lg:flex-row justify-between items-center"
@@ -195,14 +211,14 @@ const onKanbanChange = (
       />
       <DottedSeparator class="my-4" />
 
-      <TabsContent :value="VIEWS.TABLE" class="mt-0">
+      <TabsContent :value="TASK_VIEW_TABS.TABLE" class="mt-0">
         <DataTable :columns="columns" :data="data ?? []" />
       </TabsContent>
-      <TabsContent :value="VIEWS.KANBAN" class="mt-0">
+      <TabsContent :value="TASK_VIEW_TABS.KANBAN" class="mt-0">
         <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
       </TabsContent>
-      <TabsContent :value="VIEWS.CALENDAR" class="mt-0 h-full pb-4">
-        <!-- <DataCalendar :data="data ?? []" /> -->
+      <TabsContent :value="TASK_VIEW_TABS.CALENDAR" class="mt-0 h-full pb-4">
+        <DataCalendar :data="data ?? []" />
       </TabsContent>
     </div>
   </Tabs>
