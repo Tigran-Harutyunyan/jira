@@ -38,6 +38,7 @@ const projectId = useProjectId();
 const view = ref(VIEWS.TABLE);
 const filters = ref<TaskFilters>();
 const { toast } = useToast();
+const queryClient = useQueryClient();
 
 const updateFilters = (data: TaskFilters) => {
   filters.value = data;
@@ -48,14 +49,15 @@ const {
   isLoading: isLoadingTasks,
   refetch,
 } = useQuery({
-  queryKey: ["tasks", filters.value?.projectId || projectId],
+  queryKey: ["tasks", JSON.stringify(filters.value)],
   queryFn: async () => {
     const queries = { ...filters.value };
     queries.projectId = queries.projectId || projectId;
 
-    const { data } = await useFetch(`/api/workspaces/${workspaceId}/tasks`, {
+    const data = await $fetch(`/api/workspaces/${workspaceId}/tasks`, {
       query: queries,
     });
+
     return data;
   },
 });
@@ -144,11 +146,6 @@ const { mutate: bulkUpdate } = useMutation({
         workspaceId,
       },
     }),
-  onSuccess: (data) => {
-    // queryClient.invalidateQueries({
-    //   queryKey: ["tasks", filters.value?.projectId || projectId],
-    // });
-  },
   onError: (error) => {
     toast({
       title: error,
