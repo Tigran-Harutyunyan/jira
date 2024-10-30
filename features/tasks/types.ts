@@ -25,3 +25,11 @@ export type TaskFilters = {
   projectId?: string;
   dueDate: string;
 };
+
+export const TASK_VIEW_TABS = {
+  CALENDAR: "calendar",
+  KANBAN: "kanban",
+  TABLE: "table",
+} as const;
+
+export type TaskTabValue = typeof TASK_VIEW_TABS[keyof typeof TASK_VIEW_TABS]; 

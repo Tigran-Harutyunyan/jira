@@ -56,7 +56,7 @@ defineProps<KanbanColumnHeaderProps>();
         {{ taskCount }}
       </div>
     </div>
-    <Button @click="onOpen()" variant="ghost" size="icon" class="size-5">
+    <Button @click="onOpen(board)" variant="ghost" size="icon" class="size-5">
       <PlusIcon class="size-4 text-neutral-500" />
     </Button>
   </div>

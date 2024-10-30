@@ -26,6 +26,9 @@ import {
 import { TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+import { useCreateTaskModal } from "@/features/tasks/store/useCreateTaskModal";
+
+const { newTaskStatus } = storeToRefs(useCreateTaskModal());
 
 configure({
   validateOnBlur: false,
@@ -92,7 +95,11 @@ const onSubmit = handleSubmit(async (values) => {
 onMounted(() => {
   const params = useRoute().params;
   if (params.projectId) {
-    setFieldValue("projectId", params.projectId);
+    setFieldValue("projectId", params.projectId as string);
+  }
+
+  if (newTaskStatus.value !== null) {
+    setFieldValue("status", newTaskStatus.value);
   }
 });
 </script>
@@ -238,7 +245,7 @@ onMounted(() => {
             Cancel
           </Button>
           <Button :disabled="isPending" type="submit" size="lg">
-            {{ isPending ? "Wait" : "Create Task" }}
+            {{ isPending ? "Wait..." : "Create Task" }}
           </Button>
         </div>
       </form>
