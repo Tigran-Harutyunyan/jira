@@ -51,6 +51,7 @@ const fullCalendar = ref(null);
 //Method for interacting with component
 // let calendarApi = ref();
 // calendarApi.value = fullCalendar.value?.getApi();
+
 onMounted(() => {
   window.dispatchEvent(new Event("resize"));
 });
@@ -69,3 +70,25 @@ onMounted(() => {
     </template>
   </FullCalendar>
 </template>
+<style>
+.fc-col-header,
+.fc-timegrid-body {
+  width: 100% !important;
+}
+.fc-timegrid-body {
+  table {
+    width: 100% !important;
+  }
+}
+
+.fc-daygrid-body,
+.fc-timegrid-body,
+.fc-timegrid-cols table,
+.fc-timegrid table,
+.fc-timegrid-event-harness,
+.fc-timegrid-col-events {
+  visibility: visible !important;
+  width: 100% !important;
+  height: auto !important;
+}
+</style>
