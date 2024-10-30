@@ -7,7 +7,7 @@ export const useCreateTaskModal = defineStore("create-task-modal", () => {
 
     function onOpen(status?: TaskStatus) {
         isOpen.value = true;
-        if (status) {
+        if (status && Object.keys(TaskStatus).includes(status)) {
             newTaskStatus.value = status;
         }
     }
