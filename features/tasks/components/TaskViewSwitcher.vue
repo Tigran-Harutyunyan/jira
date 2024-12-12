@@ -22,7 +22,7 @@ import {
   type TaskStatus,
   type TaskTabValue,
   TASK_VIEW_TABS,
-} from "../types";
+} from "@/features/tasks/types";
 import { type ColumnDef } from "@tanstack/vue-table";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { useUIstore } from "@/stores/useUI";

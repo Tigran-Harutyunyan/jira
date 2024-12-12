@@ -4,7 +4,7 @@ import { type Project } from "@/features/projects/types";
 import MemberAvatar from "@/features/members/components/MemberAvatar.vue";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar.vue";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
-import { TaskStatus } from "../types";
+import { TaskStatus } from "@/features/tasks/types";
 import { cn } from "@/lib/utils";
 
 const workspaceId = useWorkspaceId();

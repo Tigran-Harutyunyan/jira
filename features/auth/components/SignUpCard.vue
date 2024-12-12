@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { registerSchema } from "../schemas";
+import { registerSchema } from "@/features/auth/schemas";
 
 const showTerms = false;
 

@@ -2,7 +2,7 @@
 import { Container, Draggable } from "vue3-smooth-dnd";
 import KanbanCard from "./KanbanCard.vue";
 import KanbanColumnHeader from "./KanbanColumnHeader.vue";
-import { type Task, TaskStatus } from "../types";
+import { type Task, TaskStatus } from "@/features/tasks/types";
 
 const boards: TaskStatus[] = [
   TaskStatus.BACKLOG,

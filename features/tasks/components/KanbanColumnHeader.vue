@@ -11,8 +11,8 @@ import {
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { TaskStatus } from "../types";
-import { useCreateTaskModal } from "../store/useCreateTaskModal";
+import { TaskStatus } from "@/features/tasks/types";
+import { useCreateTaskModal } from "@/features/tasks/store/useCreateTaskModal";
 
 const { onOpen } = useCreateTaskModal();
 

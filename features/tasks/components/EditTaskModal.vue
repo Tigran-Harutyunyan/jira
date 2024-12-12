@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import EditTaskFormWrapper from "../components/EditTaskFormWrapper.vue";
+import EditTaskFormWrapper from "@/features/tasks/components/EditTaskFormWrapper.vue";
 import ResponsiveModal from "@/components/ResponsiveModal.vue";
-import { useEditTaskModal } from "../store/useEditTaskModal";
+import { useEditTaskModal } from "@/features/tasks/store/useEditTaskModal";
 
 const { onClose } = useEditTaskModal();
 const { isOpen, taskId } = storeToRefs(useEditTaskModal());

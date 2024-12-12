@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { TaskStatus, type TaskFilters } from "../types";
+import { TaskStatus } from "@/features/tasks/types";
 
 interface DataFiltersProps {
   hideProjectFilter?: boolean;

@@ -3,7 +3,7 @@ import { Loader } from "lucide-vue-next";
 import { Card, CardContent } from "@/components/ui/card";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import EditTaskForm from "@/features/tasks/components/EditTaskForm.vue";
-import { type Task } from "../types";
+import { type Task } from "@/features/tasks/types";
 
 const emit = defineEmits<{
   (e: "close"): void;

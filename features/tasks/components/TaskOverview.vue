@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { type Task } from "../types";
+import { type Task } from "@/features/tasks/types";
 import { PencilIcon } from "lucide-vue-next";
 import MemberAvatar from "@/features/members/components/MemberAvatar.vue";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import DottedSeparator from "@/components/DottedSeparator.vue";
-import TaskDate from "./TaskDate.vue";
-import OverviewProperty from "./OverviewProperty.vue";
+import TaskDate from "@/features/tasks/components/TaskDate.vue";
+import OverviewProperty from "@/features/tasks/components/OverviewProperty.vue";
 import { useEditTaskModal } from "@/features/tasks/store/useEditTaskModal";
 import EditTaskModal from "@/features/tasks/components/EditTaskModal.vue";
 

@@ -4,7 +4,7 @@ import ProjectAvatar from "@/features/projects/components/ProjectAvatar.vue";
 import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { type Project } from "@/features/projects/types";
-import { type Task } from "../types";
+import { type Task } from "@/features/tasks/types";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import { useToast } from "@/components/ui/toast/use-toast";
 

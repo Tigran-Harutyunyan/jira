@@ -4,7 +4,7 @@ import { PencilIcon, XIcon } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import DottedSeparator from "@/components/DottedSeparator.vue";
-import { type Task } from "../types";
+import { type Task } from "@/features/tasks/types";
 
 interface TaskDescriptionProps {
   task: Task;

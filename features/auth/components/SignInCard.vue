@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { loginSchema } from "../schemas";
+import { loginSchema } from "@/features/auth/schemas";
 
 configure({
   validateOnBlur: false,

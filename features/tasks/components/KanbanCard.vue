@@ -6,10 +6,10 @@ import ProjectAvatar from "@/features/projects/components/ProjectAvatar.vue";
 
 import DottedSeparator from "@/components/DottedSeparator.vue";
 
-import TaskDate from "./TaskDate.vue";
-import ActionsCell from "./columns/ActionsCell.vue";
+import TaskDate from "@/features/tasks/components/TaskDate.vue";
+import ActionsCell from "@/features/tasks/components/columns/ActionsCell.vue";
 
-import { type Task } from "../types";
+import { type Task } from "@/features/tasks/types";
 
 interface KanbanCardProps {
   task: Task;

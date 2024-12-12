@@ -17,8 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { type Workspace } from "../types";
-import { updateWorkspaceSchema } from "../schemas";
+import { type Workspace } from "@/features/workspaces/types";
+import { updateWorkspaceSchema } from "@/features/workspaces/schemas";
 
 configure({
   validateOnBlur: false,

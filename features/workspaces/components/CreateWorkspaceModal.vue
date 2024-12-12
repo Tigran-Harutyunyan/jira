@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import CreateWorkspaceForm from "../components/CreateWorkspaceForm.vue";
+import CreateWorkspaceForm from "@/features/workspaces/components/CreateWorkspaceForm.vue";
 import ResponsiveModal from "@/components/ResponsiveModal.vue";
-import { useCreateWorkspaceModal } from "../store/useCreateWorkspaceModal";
+import { useCreateWorkspaceModal } from "@/features/workspaces/store/useCreateWorkspaceModal";
 
 const { onClose } = useCreateWorkspaceModal();
 const { isOpen } = storeToRefs(useCreateWorkspaceModal());

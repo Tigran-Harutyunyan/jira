@@ -23,8 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { TaskStatus } from "../types";
-import { createTaskSchema } from "../schemas";
+import { TaskStatus } from "@/features/tasks/types";
+import { createTaskSchema } from "@/features/tasks/schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import { useProjectId } from "@/features/projects/composables/useProjectId";
 import { useCreateTaskModal } from "@/features/tasks/store/useCreateTaskModal";
