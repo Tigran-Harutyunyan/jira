@@ -4,7 +4,7 @@ import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { useWindowSize } from "@vueuse/core";
 
 const emit = defineEmits<{
-  (e: "onOpenChange"): void;
+  (e: "openChange"): void;
 }>();
 
 interface ResponsiveModalProps {
@@ -28,7 +28,7 @@ defineExpose({ openModal });
 </script>
 
 <template>
-  <Dialog v-if="isDesktop" :open="open" @update:open="emit('onOpenChange')">
+  <Dialog v-if="isDesktop" :open="open" @update:open="emit('openChange')">
     <DialogContent
       class="w-full sm:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]"
     >

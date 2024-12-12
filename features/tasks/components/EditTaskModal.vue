@@ -8,7 +8,7 @@ const { isOpen, taskId } = storeToRefs(useEditTaskModal());
 </script>
 
 <template>
-  <ResponsiveModal :open="isOpen" @onOpenChange="onClose">
-    <EditTaskFormWrapper @onClose="onClose" :id="taskId" />
+  <ResponsiveModal :open="isOpen" @openChange="onClose">
+    <EditTaskFormWrapper @close="onClose" :id="taskId" />
   </ResponsiveModal>
 </template>

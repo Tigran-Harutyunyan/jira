@@ -26,7 +26,7 @@ import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId
 import { useProjectId } from "@/features/projects/composables/useProjectId";
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 interface EditFormProps {
@@ -251,7 +251,7 @@ const onRemoveImage = () => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onClose')"
+            @click="emit('close')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >

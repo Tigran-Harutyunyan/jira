@@ -21,7 +21,7 @@ configure({
 });
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 interface CreateFormProps {
@@ -49,7 +49,7 @@ const { mutate, isPending } = useMutation({
     if (data && "workspace" in data && "$id" in data.workspace) {
       router.push(`/workspaces/${data.workspace.$id}`);
     }
-    emit("onClose");
+    emit("close");
   },
   onError: (error) => {
     toast({
@@ -192,7 +192,7 @@ const onRemoveImage = () => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onClose')"
+            @click="emit('close')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >

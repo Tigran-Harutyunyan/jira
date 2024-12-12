@@ -26,7 +26,7 @@ const props = defineProps<DataKanbanProps>();
 const { data: RawTasks } = toRefs(props);
 
 const emit = defineEmits<{
-  (e: "onChange", tasks: TasksToUpdate): void;
+  (e: "change", tasks: TasksToUpdate): void;
 }>();
 
 let tasks = ref();
@@ -134,7 +134,7 @@ const onCardDrop = (
   });
 
   if (updatesPayload.length) {
-    emit("onChange", updatesPayload);
+    emit("change", updatesPayload);
   }
 
   tasks.value = { ...newTasks };

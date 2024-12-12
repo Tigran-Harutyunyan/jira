@@ -8,7 +8,7 @@ const { isOpen } = storeToRefs(useCreateProjectModal());
 </script>
 
 <template>
-  <ResponsiveModal :open="isOpen" @onOpenChange="onClose">
-    <CreateProjectForm @onClose="onClose" />
+  <ResponsiveModal :open="isOpen" @openChange="onClose">
+    <CreateProjectForm @close="onClose" />
   </ResponsiveModal>
 </template>

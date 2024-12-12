@@ -43,7 +43,7 @@ interface EditTaskFormProps {
 const props = defineProps<EditTaskFormProps>();
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 configure({
@@ -92,7 +92,7 @@ const { mutate, isPending } = useMutation({
         });
       }
 
-      emit("onClose");
+      emit("close");
       toast({
         title: "Task updated",
       });
@@ -151,7 +151,7 @@ const onDateChange = (date) => {
             <FormItem>
               <FormLabel> Due Date </FormLabel>
               <FormControl>
-                <DatePicker v-model="dueDate" @onChange="onDateChange" />
+                <DatePicker v-model="dueDate" @change="onDateChange" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -252,7 +252,7 @@ const onDateChange = (date) => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onClose')"
+            @click="emit('close')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >

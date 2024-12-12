@@ -8,7 +8,7 @@ const { isOpen } = storeToRefs(useCreateWorkspaceModal());
 </script>
 
 <template>
-  <ResponsiveModal :open="isOpen" @onOpenChange="onClose">
-    <CreateWorkspaceForm @onClose="onClose" />
+  <ResponsiveModal :open="isOpen" @openChange="onClose">
+    <CreateWorkspaceForm @close="onClose" />
   </ResponsiveModal>
 </template>

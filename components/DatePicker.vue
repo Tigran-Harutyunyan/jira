@@ -20,7 +20,7 @@ const value = defineModel<Date>();
 defineProps<DatePickerProps>();
 
 const emit = defineEmits<{
-  (e: "onChange", date: any): void;
+  (e: "change", date: any): void;
 }>();
 </script>
 
@@ -49,7 +49,7 @@ const emit = defineEmits<{
       <VDatePicker
         :minDate="new Date()"
         v-model="value"
-        @dayclick="(data) => emit('onChange', data.date)"
+        @dayclick="(data) => emit('change', data.date)"
       />
     </PopoverContent>
   </Popover>

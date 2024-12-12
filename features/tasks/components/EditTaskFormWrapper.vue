@@ -6,7 +6,7 @@ import EditTaskForm from "@/features/tasks/components/EditTaskForm.vue";
 import { type Task } from "../types";
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 interface EditTaskFormWrapperProps {
@@ -80,6 +80,6 @@ const isLoading = computed(
     :projectOptions="projectOptions ?? []"
     :memberOptions="memberOptions ?? []"
     :showCancel="true"
-    @onClose="emit('onClose')"
+    @close="emit('close')"
   />
 </template>

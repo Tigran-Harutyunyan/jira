@@ -5,7 +5,7 @@ import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId
 import CreateTaskForm from "@/features/tasks/components/CreateTaskForm.vue";
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 const workspaceId = useWorkspaceId();
@@ -66,6 +66,6 @@ const isLoading = computed(
     :projectOptions="projectOptions ?? []"
     :memberOptions="memberOptions ?? []"
     :showCancel="true"
-    @onClose="emit('onClose')"
+    @close="emit('close')"
   />
 </template>

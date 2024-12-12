@@ -38,7 +38,7 @@ defineExpose({ openModal });
 </script>
 
 <template>
-  <ResponsiveModal :open="showConfirm" @onOpenChange="handleUserInput(false)">
+  <ResponsiveModal :open="showConfirm" @openChange="handleUserInput(false)">
     <Card class="w-full h-full border-none shadow-none">
       <CardContent class="pt-8">
         <CardHeader class="p-0">

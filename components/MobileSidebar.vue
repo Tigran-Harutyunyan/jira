@@ -12,6 +12,14 @@ watch(
     isOpen.value = false;
   }
 );
+
+const closeSidebar = () => {
+  isOpen.value = false;
+};
+
+provide("sidebar", {
+  closeSidebar,
+});
 </script>
 
 <template>

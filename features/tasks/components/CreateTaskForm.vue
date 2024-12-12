@@ -49,7 +49,7 @@ interface CreateTaskFormProps {
 defineProps<CreateTaskFormProps>();
 
 const emit = defineEmits<{
-  (e: "onClose"): void;
+  (e: "close"): void;
 }>();
 
 const { setFieldValue, handleSubmit, validate, values } = useForm({
@@ -83,7 +83,7 @@ const { mutate, isPending } = useMutation({
           queryKey: ["workspace-analytics", workspaceId],
         });
       }
-      emit("onClose");
+      emit("close");
       toast({
         title: "Task created",
       });
@@ -149,7 +149,7 @@ onMounted(() => {
               <FormControl>
                 <DatePicker
                   v-model="dueDate"
-                  @onChange="onDateChange"
+                  @change="onDateChange"
                   :with-min-date="true"
                 />
               </FormControl>
@@ -252,7 +252,7 @@ onMounted(() => {
             type="button"
             size="lg"
             variant="secondary"
-            @click="emit('onClose')"
+            @click="emit('close')"
             :disabled="isPending"
             :class="{ invisible: !showCancel }"
           >

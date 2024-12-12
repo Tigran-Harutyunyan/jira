@@ -207,7 +207,7 @@ const onTabChange = (tab: TaskTabValue) => {
       <DottedSeparator class="my-4" />
       <DataFilters
         :hideProjectFilter="hideProjectFilter"
-        @onChange="updateFilters"
+        @change="updateFilters"
       />
       <DottedSeparator class="my-4" />
 
@@ -215,7 +215,7 @@ const onTabChange = (tab: TaskTabValue) => {
         <DataTable :columns="columns" :data="data ?? []" />
       </TabsContent>
       <TabsContent :value="TASK_VIEW_TABS.KANBAN" class="mt-0">
-        <DataKanban @onChange="onKanbanChange" :data="data ?? []" />
+        <DataKanban @change="onKanbanChange" :data="data ?? []" />
       </TabsContent>
       <TabsContent :value="TASK_VIEW_TABS.CALENDAR" class="mt-0 h-full pb-4">
         <DataCalendar :data="data ?? []" />

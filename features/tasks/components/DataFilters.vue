@@ -22,7 +22,7 @@ interface DataFiltersProps {
 
 defineProps<DataFiltersProps>();
 const emit = defineEmits<{
-  (e: "onChange", data: any): void;
+  (e: "change", data: any): void;
 }>();
 
 const workspaceId = useWorkspaceId();
@@ -114,7 +114,7 @@ const update = () => {
     payload.dueDate = format(dueDate.value, "yyyy-MM-dd");
   }
 
-  emit("onChange", payload);
+  emit("change", payload);
 };
 </script>
 
@@ -192,7 +192,7 @@ const update = () => {
       placeholder="Due date"
       className="h-8 w-full lg:w-auto"
       :value="dueDate"
-      @onChange="onDateChange"
+      @change="onDateChange"
     />
   </div>
 </template>

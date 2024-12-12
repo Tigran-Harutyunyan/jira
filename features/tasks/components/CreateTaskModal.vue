@@ -8,7 +8,7 @@ const { isOpen } = storeToRefs(useCreateTaskModal());
 </script>
 
 <template>
-  <ResponsiveModal :open="isOpen" @onOpenChange="onClose">
-    <CreateTaskFormWrapper @onClose="onClose" />
+  <ResponsiveModal :open="isOpen" @openChange="onClose">
+    <CreateTaskFormWrapper @close="onClose" />
   </ResponsiveModal>
 </template>
