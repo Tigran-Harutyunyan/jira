@@ -15,9 +15,11 @@ interface DatePickerProps {
   withMinDate?: boolean;
 }
 
-const value = defineModel<Date>();
+const value = defineModel<Date | string>();
 
 defineProps<DatePickerProps>();
+
+const isOpen = ref(false);
 
 const emit = defineEmits<{
   (e: "change", date: any): void;
@@ -25,7 +27,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Popover>
+  <Popover :open="isOpen" @update:open="isOpen = !isOpen">
     <PopoverTrigger as-child>
       <Button
         variant="outline"
@@ -49,8 +51,14 @@ const emit = defineEmits<{
       <VDatePicker
         :minDate="new Date()"
         v-model="value"
-        @dayclick="(data) => emit('change', data.date)"
-      />
+        @dayclick="
+          (data) => {
+            isOpen = false;
+            emit('change', data.date);
+          }
+        "
+      >
+      </VDatePicker>
     </PopoverContent>
   </Popover>
 </template>
