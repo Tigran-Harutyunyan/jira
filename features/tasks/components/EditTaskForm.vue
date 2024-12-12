@@ -26,8 +26,10 @@ import {
 import { TaskStatus, type Task } from "../types";
 import { createTaskSchema } from "../schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+import { useProjectId } from "@/features/projects/composables/useProjectId";
 
 const queryClient = useQueryClient();
+const projectId = useProjectId();
 const workspaceId = useWorkspaceId();
 const { toast } = useToast();
 
@@ -77,6 +79,19 @@ const { mutate, isPending } = useMutation({
     if (data && "$id" in data) {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
+
+      if (projectId) {
+        queryClient.invalidateQueries({
+          queryKey: ["project-analytics", projectId],
+        });
+      }
+
+      if (workspaceId) {
+        queryClient.invalidateQueries({
+          queryKey: ["workspace-analytics", workspaceId],
+        });
+      }
+
       emit("onClose");
       toast({
         title: "Task updated",

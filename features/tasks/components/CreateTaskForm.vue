@@ -26,6 +26,7 @@ import {
 import { TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+import { useProjectId } from "@/features/projects/composables/useProjectId";
 import { useCreateTaskModal } from "@/features/tasks/store/useCreateTaskModal";
 
 const { newTaskStatus } = storeToRefs(useCreateTaskModal());
@@ -36,6 +37,7 @@ configure({
 
 const queryClient = useQueryClient();
 const workspaceId = useWorkspaceId();
+const projectId = useProjectId();
 const { toast } = useToast();
 
 interface CreateTaskFormProps {
@@ -69,6 +71,18 @@ const { mutate, isPending } = useMutation({
   onSuccess: (data) => {
     if (data && "$id" in data) {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+
+      if (projectId) {
+        queryClient.invalidateQueries({
+          queryKey: ["project-analytics", projectId],
+        });
+      }
+
+      if (workspaceId) {
+        queryClient.invalidateQueries({
+          queryKey: ["workspace-analytics", workspaceId],
+        });
+      }
       emit("onClose");
       toast({
         title: "Task created",

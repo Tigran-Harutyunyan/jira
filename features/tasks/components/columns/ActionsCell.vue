@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+import { useProjectId } from "@/features/projects/composables/useProjectId";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +31,7 @@ interface TaskActionsProps {
 const props = defineProps<TaskActionsProps>();
 
 const workspaceId = useWorkspaceId();
+const projectId = useProjectId();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const router = useRouter();
 const { toast } = useToast();
@@ -47,6 +49,18 @@ const { mutate, isPending } = useMutation({
       });
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
+
+      if (projectId) {
+        queryClient.invalidateQueries({
+          queryKey: ["project-analytics", projectId],
+        });
+      }
+
+      if (workspaceId) {
+        queryClient.invalidateQueries({
+          queryKey: ["workspace-analytics", workspaceId],
+        });
+      }
     }
   },
   onError: (error) => {
