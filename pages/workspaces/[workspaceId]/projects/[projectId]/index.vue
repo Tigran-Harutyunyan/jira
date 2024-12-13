@@ -10,6 +10,8 @@ import { useProjectId } from "@/features/projects/composables/useProjectId";
 import { type Project } from "@/features/projects/types";
 import Analytics from "@/components/Analytics.vue";
 
+definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
+
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 
