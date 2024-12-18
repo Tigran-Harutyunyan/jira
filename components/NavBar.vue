@@ -1,26 +1,17 @@
 <script setup lang="ts">
 import UserButton from "@/features/auth/components/UserButton.vue";
-const pathnameMap = {
-  tasks: {
-    title: "My Tasks",
-    description: "View all of your tasks here",
-  },
-  projects: {
-    title: "My Project",
-    description: "View tasks of your project here",
-  },
+import { routeMetadata, defaultMetadata } from "@/data/routeMetaData";
+
+// Helper function to get route metadata
+const getRouteMetadata = (routeName: string | null) => {
+  return routeName && routeMetadata[routeName]
+    ? routeMetadata[routeName]
+    : defaultMetadata;
 };
 
-const defaultMap = {
-  title: "Home",
-  description: "Monitor all of your projects and tasks here",
-};
-
-const pathname = useRoute().fullPath;
-const pathnameParts = pathname.split("/");
-const pathnameKey = pathnameParts[3] as keyof typeof pathnameMap;
-
-const { title, description } = pathnameMap[pathnameKey] || defaultMap;
+// Extract route information
+const route = useRoute();
+const { title, description } = getRouteMetadata(route.name as string);
 </script>
 
 <template>
