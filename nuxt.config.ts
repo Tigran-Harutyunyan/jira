@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
-
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg', href: '/favicon.svg' }
+      ]
+    }
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
