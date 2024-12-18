@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
             maxAge: 60 * 60 * 24 * 30,
         })
 
-        return { success: true };
+        return { isLoggedIn: !!session?.userId };
 
     } catch (error) {
         return createError({

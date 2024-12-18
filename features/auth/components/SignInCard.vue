@@ -35,13 +35,14 @@ const { mutate: login, isPending } = useMutation({
       method: "POST",
       body: payload,
     }),
-  onSuccess: (data) => {
-    if (data?.success) {
+  onSuccess: ({ isLoggedIn }) => {
+    if (isLoggedIn) {
       queryClient.invalidateQueries({ queryKey: ["current"] });
       toast({
         title: "Logged in",
       });
-      router.push("/workspaces");
+
+      location.href = "/workspaces";
     }
   },
   onError: (error) => {
