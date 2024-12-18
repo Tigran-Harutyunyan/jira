@@ -41,7 +41,7 @@ const { mutate: login, isPending } = useMutation({
       toast({
         title: "Logged in",
       });
-      router.push("/");
+      router.push("/workspaces");
     }
   },
   onError: (error) => {
