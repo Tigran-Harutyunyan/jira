@@ -6,6 +6,11 @@ import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId
 import { useProjectId } from "@/features/projects/composables/useProjectId";
 import { type Project } from "@/features/projects/types";
 import { ArrowLeftIcon } from "lucide-vue-next";
+
+useHead({
+  title: "Edit project",
+});
+
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 

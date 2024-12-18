@@ -9,7 +9,9 @@ import { useTaskId } from "@/features/tasks/composables/useTaskId";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 
 definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
-
+useHead({
+  title: "Edit task",
+});
 const taskId = useTaskId();
 const workspaceId = useWorkspaceId();
 

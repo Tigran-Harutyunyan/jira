@@ -11,6 +11,9 @@ import { type Project } from "@/features/projects/types";
 import Analytics from "@/components/Analytics.vue";
 
 definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
+useHead({
+  title: "My Project",
+});
 
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();

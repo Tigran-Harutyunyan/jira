@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
+useHead({
+  title: "Create workspace",
+});
 import CreateWorkspaceForm from "@/features/workspaces/components/CreateWorkspaceForm.vue";
 </script>
 

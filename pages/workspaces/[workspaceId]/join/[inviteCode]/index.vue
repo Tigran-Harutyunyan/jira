@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
-
+useHead({
+  title: "Join workspace",
+});
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import JoinWorkspaceForm from "@/features/workspaces/components/JoinWorkspaceForm.vue";
 import PageLoader from "@/components/PageLoader.vue";

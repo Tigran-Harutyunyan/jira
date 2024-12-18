@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
+definePageMeta({
+  middleware: "auth",
+  auth: { guestRedirectUrl: "/sign-in" },
+});
+
+useHead({
+  title: "Home | Monitor all of your projects and tasks",
+});
 
 import PageLoader from "@/components/PageLoader.vue";
 import PageError from "@/components/PageError.vue";

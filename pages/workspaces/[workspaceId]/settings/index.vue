@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "auth", auth: { guestRedirectUrl: "/sign-in" } });
-
+useHead({
+  title: "Edit Workspace",
+});
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import EditWorkspaceForm from "@/features/workspaces/components/EditWorkspaceForm.vue";
 import PageLoader from "@/components/PageLoader.vue";
