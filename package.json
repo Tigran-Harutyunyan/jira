@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --port 3000"
+    "dev": "nuxt dev --port 8000"
   },
   "devDependencies": {
     "@nuxt/image": "^1.8.0",
@@ -44,7 +44,6 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.2.0",
     "vee-validate": "^4.13.2",
-    "vue-query": "^1.26.0",
     "vue-sonner": "^1.1.5",
     "vue3-icons": "^0.1.13",
     "vue3-smooth-dnd": "^0.0.6",
