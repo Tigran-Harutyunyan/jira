@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -38,7 +37,7 @@ configure({
 const queryClient = useQueryClient();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 interface CreateTaskFormProps {
   projectOptions: { id: string; name: string; imageUrl: string }[];
@@ -52,7 +51,7 @@ const emit = defineEmits<{
   (e: "close"): void;
 }>();
 
-const { setFieldValue, handleSubmit, validate, values } = useForm({
+const { setFieldValue, handleSubmit, validate } = useForm({
   initialValues: {
     workspaceId,
   },
@@ -70,7 +69,7 @@ const { mutate, isPending } = useMutation({
     $fetch("/api/task", { method: "POST", body: payload }),
   onSuccess: (data) => {
     if (data && "$id" in data) {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks-analytics"] });
 
       if (projectId) {
         queryClient.invalidateQueries({
@@ -90,9 +89,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 
@@ -102,7 +99,6 @@ const onSubmit = handleSubmit(async (values) => {
     ...values,
     dueDate: dueDate.value,
   };
-
   mutate(payload);
 });
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useForm, configure } from "vee-validate";
-import { useToast } from "@/components/ui/toast/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,8 +17,7 @@ configure({
 });
 
 const queryClient = useQueryClient();
-const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 const form = useForm({
   initialValues: {
@@ -46,9 +44,7 @@ const { mutate: login, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error?.message,
-    });
+    showResponseError(error);
   },
 });
 

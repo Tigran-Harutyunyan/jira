@@ -24,7 +24,6 @@ import {
   TASK_VIEW_TABS,
 } from "@/features/tasks/types";
 import { type ColumnDef } from "@tanstack/vue-table";
-import { useToast } from "@/components/ui/toast/use-toast";
 import { useUIstore } from "@/stores/useUI";
 
 interface TaskViewSwitcherProps {
@@ -37,7 +36,7 @@ const { onOpen } = useCreateTaskModal();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 const filters = ref<TaskFilters>();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 const { taskViewTab } = storeToRefs(useUIstore());
 const { setTaskViewTab } = useUIstore();
@@ -154,9 +153,7 @@ const { mutate: bulkUpdate } = useMutation({
       },
     }),
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

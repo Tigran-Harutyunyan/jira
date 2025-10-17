@@ -1,105 +1,69 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
-import { ImageIcon } from "lucide-vue-next";
 import { useForm, configure } from "vee-validate";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import DottedSeparator from "@/components/DottedSeparator.vue";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
-
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
+import { useRouter } from "vue-router";
+import { useQueryClient, useMutation } from "@tanstack/vue-query";
 import { createProjectSchema } from "@/features/projects/schemas";
-configure({
-  validateOnBlur: false,
-});
+import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ImageIcon } from "lucide-vue-next";
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+configure({ validateOnBlur: false });
 
-interface CreateFormProps {
-  showCancel?: boolean;
-}
-
-withDefaults(defineProps<CreateFormProps>(), {
-  showCancel: true,
-});
-
-const imageRef = ref<File | null>(null);
-const imageSrc = ref();
-const image = ref<File | null>(null);
-const queryClient = useQueryClient();
-const router = useRouter();
-const { toast } = useToast();
+const emit = defineEmits<{ (e: "close"): void }>();
+const { toast, showResponseError } = useToastMessage();
 const workspaceId = useWorkspaceId();
+const router = useRouter();
+const queryClient = useQueryClient();
 
-const handleImageChange = (e) => {
+const image = ref<File | null>(null);
+const imageSrc = ref<string | null>();
+
+const handleImageChange = (e: Event) => {
   const uploadedFile = (e.target as HTMLInputElement).files?.[0];
-
   if (uploadedFile) {
     image.value = uploadedFile;
-    imageSrc.value = URL.createObjectURL(image.value);
+    imageSrc.value = URL.createObjectURL(uploadedFile);
   }
 };
 
 const form = useForm({
-  initialValues: {
-    name: "",
-  },
+  initialValues: { name: "" },
   validationSchema: createProjectSchema,
 });
 
-const { mutate, isPending } = useMutation({
-  mutationFn: (newProject: FormData) =>
-    $fetch("/api/project", { method: "POST", body: newProject }),
+const { mutate } = useMutation({
+  mutationFn: (newProject: FormData) => {
+    return $fetch("/api/project", { method: "POST", body: newProject });
+  },
   onSuccess: (data) => {
     if (data && "$id" in data && "workspaceId" in data) {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      queryClient.invalidateQueries({
-        queryKey: ["projects", workspaceId],
-      });
+      queryClient.invalidateQueries({ queryKey: ["projects", workspaceId] });
       router.push(`/workspaces/${data.workspaceId}`);
       emit("close");
       toast({
         title: "Project created",
+        description: "Your project has been successfully created.",
       });
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 
-const onSubmit = form.handleSubmit(async (values) => {
+const onSubmit = form.handleSubmit((values) => {
   if (!values.name) return;
 
   const formData = new FormData();
   formData.append("name", values.name);
   formData.append("workspaceId", workspaceId);
-
-  if (image.value instanceof File) {
-    formData.append("image", image.value);
-  }
-
+  if (image.value) formData.append("image", image.value);
   mutate(formData);
 });
 
 const onRemoveImage = () => {
-  if (image.value) {
-    image.value = null;
-    imageSrc.value = "";
-  }
+  image.value = null;
+  imageSrc.value = null;
 };
 </script>
 
@@ -158,11 +122,11 @@ const onRemoveImage = () => {
                     class="hidden"
                     type="file"
                     accept=".jpg, .png, .jpeg, .svg"
-                    ref="imageRef"
+                    ref="image"
                     @change="handleImageChange"
                     @click="
-                      imageRef = null;
-                      imageSrc = '';
+                      image = null;
+                      imageSrc = null;
                     "
                     :disabled="isPending"
                   />
@@ -186,7 +150,7 @@ const onRemoveImage = () => {
                     variant="teritary"
                     size="xs"
                     class="w-fit mt-2"
-                    @click="imageRef?.click()"
+                    @click="image?.click()"
                   >
                     Upload Image
                   </Button>

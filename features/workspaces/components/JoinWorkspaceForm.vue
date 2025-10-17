@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import DottedSeparator from "@/components/DottedSeparator.vue";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,7 @@ const router = useRouter();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const workspaceId = useWorkspaceId();
 const inviteCode = useInviteCode();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 const queryClient = useQueryClient();
 
 const { mutate, isPending } = useMutation({
@@ -46,9 +45,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

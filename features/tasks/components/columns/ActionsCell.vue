@@ -17,7 +17,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/toast/use-toast";
 import { useEditTaskModal } from "@/features/tasks/store/useEditTaskModal";
 
 const { onOpen } = useEditTaskModal();
@@ -34,7 +33,7 @@ const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 const queryClient = useQueryClient();
 
 const { mutate, isPending } = useMutation({
@@ -64,9 +63,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

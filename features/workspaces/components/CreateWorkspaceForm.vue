@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { ImageIcon } from "lucide-vue-next";
 import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
@@ -38,7 +37,7 @@ const image = ref<File | null>(null);
 
 const queryClient = useQueryClient();
 const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 const { mutate, isPending } = useMutation({
   mutationFn: (newWorkspace: FormData) =>
@@ -52,9 +51,7 @@ const { mutate, isPending } = useMutation({
     emit("close");
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

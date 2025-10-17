@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { useForm, configure } from "vee-validate";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +16,7 @@ const showTerms = false;
 
 const queryClient = useQueryClient();
 const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 configure({
   validateOnBlur: false,
@@ -48,9 +47,7 @@ const { mutate: register, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { ImageIcon } from "lucide-vue-next";
 import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
@@ -43,7 +42,7 @@ const imageSrc = ref(props.initialValues.imageUrl);
 const image = ref<File | null>(props.initialValues.imageUrl);
 const queryClient = useQueryClient();
 const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 const workspaceId = useWorkspaceId();
 const projectId = useProjectId();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
@@ -85,9 +84,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 
@@ -126,9 +123,7 @@ const { mutate: deleteProject, isPending: isDeletingProject } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

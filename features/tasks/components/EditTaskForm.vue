@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -31,7 +30,7 @@ import { useProjectId } from "@/features/projects/composables/useProjectId";
 const queryClient = useQueryClient();
 const projectId = useProjectId();
 const workspaceId = useWorkspaceId();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 interface EditTaskFormProps {
   initialValues: Task;
@@ -99,9 +98,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

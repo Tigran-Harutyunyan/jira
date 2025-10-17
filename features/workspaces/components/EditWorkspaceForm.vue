@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
-
 import { ArrowLeftIcon, CopyIcon, ImageIcon } from "lucide-vue-next";
 import { useForm, configure } from "vee-validate";
 import { Input } from "@/components/ui/input";
@@ -41,7 +39,7 @@ const cardTitle = ref(props.initialValues.name);
 
 const queryClient = useQueryClient();
 const router = useRouter();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const inviteCode = ref(props.initialValues.inviteCode);
 const fullInviteLink = computed(
@@ -77,9 +75,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 
@@ -102,9 +98,7 @@ const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } = useMutation(
       }
     },
     onError: (error) => {
-      toast({
-        title: error,
-      });
+      showResponseError(error);
     },
   }
 );
@@ -130,9 +124,7 @@ const { mutate: resetInviteCode, isPending: isResettingInviteCode } =
       }
     },
     onError: (error) => {
-      toast({
-        title: error,
-      });
+      showResponseError(error);
     },
   });
 

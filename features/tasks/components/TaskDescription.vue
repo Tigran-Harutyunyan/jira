@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
 import { PencilIcon, XIcon } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,7 +15,7 @@ const isEditing = ref(false);
 const description = ref(props.task.description);
 
 const queryClient = useQueryClient();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 const { mutate, isPending } = useMutation({
   mutationFn: (payload) =>
@@ -37,9 +36,7 @@ const { mutate, isPending } = useMutation({
     }
   },
   onError: (error) => {
-    toast({
-      title: error,
-    });
+    showResponseError(error);
   },
 });
 

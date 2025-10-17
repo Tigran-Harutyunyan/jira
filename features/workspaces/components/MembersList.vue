@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "@/components/ui/toast/use-toast";
-
 import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-vue-next";
 import { useWorkspaceId } from "@/features/workspaces/composables/useWorkspaceId";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
@@ -25,7 +23,7 @@ import {
 const workspaceId = useWorkspaceId();
 const confirm = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const queryClient = useQueryClient();
-const { toast } = useToast();
+const { toast, showResponseError } = useToastMessage();
 
 const { isLoading, data: members } = useQuery({
   queryKey: ["members", workspaceId],
@@ -45,9 +43,7 @@ const { mutate: updateMember, isPending: isUpdatingMember } = useMutation({
     });
   },
   onError: (error) => {
-    toast({
-      title: error.message,
-    });
+    showResponseError(error);
   },
 });
 
@@ -66,9 +62,7 @@ const { mutate: deleteMember } = useMutation({
     });
   },
   onError: (error) => {
-    toast({
-      title: error.message,
-    });
+    showResponseError(error);
   },
 });
 
